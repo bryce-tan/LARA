@@ -16,7 +16,7 @@ from Online_CDP.placer import CDA_policy
 from Monitor.monitor import check_warehouse_flag
 from Warehouses.warehouses import put_item
 
-# 定义主函数
+# main
 if __name__ == "__main__":
 
     pre_train()
@@ -35,26 +35,33 @@ if __name__ == "__main__":
     while len(items) > 0:
 
         item = random.choice(items)
+
+        # classifier
         item_classify_label = classifier(item)
+
+        # predictor
         if item_classify_label == 0:
             item_predictor_label = predictor_stable(item)
         elif item_classify_label == 3:
             item_predictor_label = predictor_volatile(item)
 
+        # placer
         action = CDA_policy(item, item_classify_label, item_predictor_label)
         if action == -1:
             stop_time += 1
             if stop_time == max_stop_times:
                 break
             continue
-
+        
+        # placement decision & monitor
         put_item(item, item_classify_label, item_predictor_label, action)
         items.remove(item)
 
         warehouses_flag = check_warehouse_flag(-1)
         if warehouses_flag == -1:
             break
-
+        
+        # model update
         cnt += 1
         if cnt % 500 == 0:
             update_model()
