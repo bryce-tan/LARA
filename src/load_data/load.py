@@ -10,6 +10,7 @@ from Monitor.monitor_conf import items_chosen
 # [11] (disk_source_file)
 def load_data_pretrain():
     items = []
+    # Here are file paths of CDs information to pretrain
     data_file = ''
     with open(data_file, "r") as f:
         for line in f:
@@ -35,6 +36,7 @@ def load_data_pretrain_fitting():
     fit_data_peak_IO = []
     fit_data_peak_bandwidth = []
 
+    # Here are file paths to record fitting data to pretrain
     fit_data_file_X = ''
     fit_data_file_ave_IO = ''
     fit_data_file_ave_bandwidth = ''
@@ -72,6 +74,7 @@ def load_data_pretrain_fitting():
 # [11] (disk_source_file)
 def load_data_allocation():
     items = []
+    # Here are file_paths of CDs information to simulate CDP
     data_file = ''
     with open(data_file, "r") as f:
         for line in f:
