@@ -23,7 +23,7 @@ from scipy.optimize import curve_fit
 episodes = 1
 # max_load_item_number = len(items) - episode_remain
 episode_remain = 500
-# 评价时间数量
+# evaluate_time_number
 evaluate_time_number = 10000
 # 
 time_interval = 1
@@ -77,7 +77,9 @@ stable_disk_bandwidth_predict = [0 for _ in range(warehouse_number)]
 
 # train_data
 def load_data_train():
+
     items = []
+    # Here are file paths of CD informations
     data_temp = []
     for j in range(len(data_temp)):
         with open(data_temp[j], "r") as f:
@@ -98,8 +100,10 @@ def load_data_train():
                 # print(item[0], "has been sampled!")
     return items
 
-# 加载货物数据集,用于预测和评价
+# load_data to simulate
 def load_data_predict():
+
+    # Here are file paths of CD informations
     items = []
     data_temp = []
     for j in range(len(data_temp)):
@@ -162,7 +166,7 @@ def multivar_piecewise(x_new, a1, b11, b12, b13, b14, b15, a2, b21, b22, b23, b2
     y[mask5] = a5 + b51 * x[mask5, 0] + b52 * x[mask5, 1] + b53 * x[mask5, 2] + b54 * x[mask5, 3] + b55 * x[mask5, 4]
     return y
 
-# stable disk or wolatile disk
+# stable disk or volatile disk
 # stable disk - 0 - IO_stable and bandwidth_stable
 # volatile disk - 3 - IO_volatile or bandwidth_volatile
 def cluster_by_hand(data_cluster_first):
@@ -339,6 +343,7 @@ def calculate_items(item, action, warehouses_total_time, warehouses_flag):
 
     warehouse_violation_time = 0
 
+    # Here are file paths of CD traces
     item_dir = ''
     item_dir_2 = ''
 
@@ -392,6 +397,8 @@ def calculate_items(item, action, warehouses_total_time, warehouses_flag):
 def calculate_warehouses(warehouses, items_chosen, time):
     # 0 capacity 1 2 stable_IO & bandwidth 3 4 burst IO & bandwidth
     warehouses_evaluate_stable_burst = [[0 for _ in range(5)] for _ in range(warehouse_number)]
+
+    # Here are file paths of CD traces
     item_dir = ''
     item_dir_2 = ''
 
@@ -842,7 +849,7 @@ if __name__ == "__main__":
         print("burst_IO_evaluate_ave:", burst_disk_IO_fit)
         print("burst_bandwidth_evaluate_ave:", burst_disk_bandwidth_fit)
 
-        # 轮次
+        # train episode
         print("episode:", e)    
 
         # ave_load_imb
@@ -855,6 +862,7 @@ if __name__ == "__main__":
         ave_average_dimension_load_imb = np.mean(average_dimension_load_imb)
         ave_average_warehouse_load_imb = np.mean(average_warehouse_load_imb)
         
+        # Here is the file path to record the experiment result
         result_file = ''
         with open(result_file, 'a') as f:
             f.write("\n")
